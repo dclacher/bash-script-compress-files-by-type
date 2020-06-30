@@ -14,18 +14,18 @@ compress_files()
             echo "No files of type $ext found"
         else
             find $path -maxdepth 1 -type f -name "*.$ext" -print0 | tar cfvz compressed_"$ext"_files.tgz --null -T -
-            # find $path -type f -name "*.$ext" | xargs -0 tar cfvz compressed_"$ext"_files.tgz
+            # -print0 option treats files with white spaces in the name
         fi
     done
 }
 
-# No arguments provided; show usage with examples
 if [ "$#" == 0 ]; then
+    # No arguments provided; show usage with examples
     echo "Usage: $0 [-t target-directory] extension-list"
     echo "Example 1: $0 -t /home/users/bigFoot/ pdf ppt jpg"
     echo "Example 2: $0 pdf ppt jpg"
 else
-    # Here there's at least one argument
+    # Here there's at least one argument provided
     if [ "$1" == "-t" ]; then
         # If the first argument is '-t', at least two more should be provided: path and one extension
         if [ "$#" -lt 3 ]; then
